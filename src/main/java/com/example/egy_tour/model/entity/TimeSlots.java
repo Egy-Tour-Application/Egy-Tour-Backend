@@ -6,19 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "languages")
+@Table(name = "time_slots")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Language {
+public class TimeSlots {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time",nullable = false)
+    private Date startTime;
+
+    @Column(name = "end_time",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endTime;
 }
