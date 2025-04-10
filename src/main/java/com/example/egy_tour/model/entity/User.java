@@ -54,7 +54,20 @@ public class User {
     )
     private List<Language> languages;
 
+    @OneToMany(mappedBy = "user")
+    private List<Program> programs;
 
+    @OneToMany(mappedBy = "user")
+    private List<TourGuideReview> tourGuideReviews;
 
+    @OneToMany(mappedBy = "user")
+    private List<TourismSpotReview> tourismSpotReviews;
 
+    @ManyToMany(mappedBy = "user")
+    @JoinTable(
+            name = "user_preferences",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_preference_id")
+    )
+    private List<UserPreference> userPreferences;
 }
