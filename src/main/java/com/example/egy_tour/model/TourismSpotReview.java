@@ -33,7 +33,7 @@ public class TourismSpotReview {
 
     @ManyToOne
     @JoinColumn(name = "reviewer_id", nullable = false)
-    private User reviewer;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "tourism_spot_id", nullable = false)

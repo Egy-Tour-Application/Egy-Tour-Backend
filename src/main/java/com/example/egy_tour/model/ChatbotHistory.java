@@ -1,6 +1,5 @@
 package com.example.egy_tour.model;
 
-import com.example.egy_tour.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -42,7 +42,7 @@ public class TourismSpot {
     private Date openingTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "opening_time")
+    @Column(name = "closing_time")
     private Date closingTime;
 
     @Column(name = "location_link")
