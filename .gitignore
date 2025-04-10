@@ -18,7 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
-application.properties
+Egy-Tour-Backend/src/main/resources/application.properties
 
 ### NetBeans ###
 /nbproject/private/
