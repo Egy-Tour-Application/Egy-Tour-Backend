@@ -1,4 +1,4 @@
-package com.example.egy_tour.model.entity;
+package com.example.egy_tour.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -57,6 +57,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<ChatbotHistory> chatbotHistory;
+
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
 
     @ManyToMany
     @JoinTable(

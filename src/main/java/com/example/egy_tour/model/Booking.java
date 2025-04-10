@@ -1,4 +1,4 @@
-package com.example.egy_tour.model.entity;
+package com.example.egy_tour.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,8 +32,12 @@ public class Booking {
     private Date endTime;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "tour_guide_id", nullable = false)
-    private User tourGuide;
+    private TourGuide tourGuide;
 
     @ManyToOne
     @JoinColumn(name = "program_id", nullable = false)
