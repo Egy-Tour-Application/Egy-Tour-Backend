@@ -2,7 +2,9 @@ package com.example.egy_tour.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -10,6 +12,8 @@ import java.util.List;
 @Table(name = "addresses")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Address {
 
     @Id
