@@ -24,6 +24,12 @@ public class Address {
     @JoinColumn(name = "parent_id")
     private Address parent;
 
+    @OneToMany(mappedBy = "parent")
+    private List<Address> children;
+
     @OneToMany(mappedBy = "address")
     private List<TourismSpot> tourismSpots;
+
+    @OneToMany(mappedBy = "address")
+    private List<TimeSlot> timeSlots;
 }

@@ -1,11 +1,12 @@
 package com.example.egy_tour.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "tour_guides")
@@ -14,8 +15,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TourGuide {
+    @Id
+    private String userId;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @MapsId
+    private User user;
 
+    @OneToMany(mappedBy = "tourGuide")
+    private List<TourGuideReview> tourGuideReviews;
 
+    @OneToMany(mappedBy = "tourGuide")
+    private List<TimeSlot> timeSlots;
 
+    @OneToMany(mappedBy = "tourGuide")
+    private List<Booking> bookings;
 }

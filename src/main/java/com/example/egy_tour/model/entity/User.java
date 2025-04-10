@@ -46,14 +46,6 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_languages",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "language_id")
-    )
-    private List<Language> languages;
-
     @OneToMany(mappedBy = "user")
     private List<Program> programs;
 
@@ -63,11 +55,25 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<TourismSpotReview> tourismSpotReviews;
 
-    @ManyToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
+    private List<ChatbotHistory> chatbotHistory;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_languages",
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "language_id", nullable = false)
+    )
+    private List<Language> languages;
+
+    @ManyToMany
     @JoinTable(
             name = "user_preferences",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_preference_id")
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "user_preference_id", nullable = false)
     )
     private List<UserPreference> userPreferences;
+
+    @OneToOne (mappedBy = "user")
+    private TourGuide tourGuide;
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeSlots {
+public class TimeSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,18 @@ public class TimeSlots {
     private int id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_time",nullable = false)
+    @Column(name = "start_time", nullable = false)
     private Date startTime;
 
-    @Column(name = "end_time",nullable = false)
+    @Column(name = "end_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "tour_guide_id", nullable = false)
+    private TourGuide tourGuide;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 }

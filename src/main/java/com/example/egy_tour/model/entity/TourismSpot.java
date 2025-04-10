@@ -30,7 +30,7 @@ public class TourismSpot {
     private double price;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,6 +46,4 @@ public class TourismSpot {
 
     @OneToMany(mappedBy = "tourismSpot")
     private List<TourismSpotReview> reviews;
-
-
 }
