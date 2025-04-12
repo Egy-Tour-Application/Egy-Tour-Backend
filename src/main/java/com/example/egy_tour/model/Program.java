@@ -30,6 +30,6 @@ public class Program {
         @JoinColumn(name = "user_id", nullable = false)
         private User user;
 
-        @OneToMany(mappedBy = "program")
+        @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
         private ArrayList<Booking> bookings;
 }

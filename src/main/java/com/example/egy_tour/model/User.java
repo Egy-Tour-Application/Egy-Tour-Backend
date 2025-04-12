@@ -46,19 +46,19 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Program> programs;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TourGuideReview> tourGuideReviews;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TourismSpotReview> tourismSpotReviews;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ChatbotHistory> chatbotHistory;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     @ManyToMany
@@ -77,6 +77,6 @@ public class User {
     )
     private List<UserPreference> userPreferences;
 
-    @OneToOne (mappedBy = "user")
+    @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
     private TourGuide tourGuide;
 }

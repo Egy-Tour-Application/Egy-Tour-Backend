@@ -28,12 +28,12 @@ public class Address {
     @JoinColumn(name = "parent_id")
     private Address parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Address> children;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<TourismSpot> tourismSpots;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<TimeSlot> timeSlots;
 }

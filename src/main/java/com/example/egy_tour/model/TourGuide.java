@@ -23,12 +23,12 @@ public class TourGuide {
     @MapsId
     private User user;
 
-    @OneToMany(mappedBy = "tourGuide")
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<TourGuideReview> tourGuideReviews;
 
-    @OneToMany(mappedBy = "tourGuide")
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<TimeSlot> timeSlots;
 
-    @OneToMany(mappedBy = "tourGuide")
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 }

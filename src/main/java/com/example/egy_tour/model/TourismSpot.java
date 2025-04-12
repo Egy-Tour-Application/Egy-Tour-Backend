@@ -48,6 +48,9 @@ public class TourismSpot {
     @Column(name = "location_link")
     private String locationLink;
 
-    @OneToMany(mappedBy = "tourismSpot")
+    @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<TourismSpotReview> reviews;
+
+    @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
+    private List<Booking> bookings;
 }
