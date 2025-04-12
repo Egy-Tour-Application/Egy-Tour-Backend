@@ -30,8 +30,11 @@ public class TourismSpot {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "price")
-    private double price;
+    @Column(name = "egyptian_price")
+    private double egyptianPrice;
+
+    @Column(name = "foreigner_price")
+    private double foreignerPrice;
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
