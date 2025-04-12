@@ -73,9 +73,9 @@ public class User {
     @JoinTable(
             name = "user_preferences",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "user_preference_id", nullable = false)
+            inverseJoinColumns = @JoinColumn(name = "preference_id", nullable = false)
     )
-    private List<UserPreference> userPreferences;
+    private List<Preference> Preferences;
 
     @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
     private TourGuide tourGuide;

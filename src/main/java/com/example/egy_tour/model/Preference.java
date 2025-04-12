@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_preferences")
+@Table(name = "preferences")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPreference {
+public class Preference {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
