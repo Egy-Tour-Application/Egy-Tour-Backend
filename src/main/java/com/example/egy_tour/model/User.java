@@ -1,10 +1,7 @@
 package com.example.egy_tour.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -79,4 +76,17 @@ public class User {
 
     @OneToOne (mappedBy = "user", cascade = CascadeType.ALL)
     private TourGuide tourGuide;
+
+
+    @Builder
+    public User(String firstName, String lastName, String email, String password, String phone, Date dateOfBirth, String nationality, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.dateOfBirth = dateOfBirth;
+        this.nationality = nationality;
+        this.gender = gender;
+    }
 }
