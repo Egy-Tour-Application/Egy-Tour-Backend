@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TourGuide {
     @Id
-    private int userId;
+    private Long userId;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -19,7 +19,7 @@ public class TimeSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_time", nullable = false)
