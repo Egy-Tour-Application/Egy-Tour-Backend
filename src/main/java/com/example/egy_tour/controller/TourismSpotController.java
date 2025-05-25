@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tourism-spot")
@@ -31,6 +34,28 @@ public class TourismSpotController {
     @GetMapping
     public List<TourismSpot> getAllTourismSpots() {
         return tourismSpotService.getAllTourismSpots();
+    }
+
+    @GetMapping("/map-locations")
+    public List<Map<String, Object>> getTourismSpotsForMap() {
+        List<TourismSpot> spots = tourismSpotService.getAllTourismSpots();
+        return spots.stream()
+                .map(spot -> {
+                    Map<String, Object> place = new HashMap<>();
+                    place.put("name", spot.getTitle());
+                    place.put("position", Map.of(
+                            "latitude", spot.getLatitude(),
+                            "longitude", spot.getLongitude()
+                    ));
+                    place.put("description", spot.getDescription());
+                    place.put("imageUrl", spot.getImage());
+                    place.put("egyptianPrice", spot.getEgyptianPrice());
+                    place.put("foreignerPrice", spot.getForeignerPrice());
+                    place.put("openingTime", spot.getOpeningTime());
+                    place.put("closingTime", spot.getClosingTime());
+                    return place;
+                })
+                .collect(Collectors.toList());
     }
 
 }
