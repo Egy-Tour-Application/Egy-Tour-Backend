@@ -27,17 +27,4 @@ public class CreateUserDTO {
 
     @NotBlank(message = "Password is required")
     private String password;
-
-    @NotBlank(message = "Phone number is required")
-    private String phone;
-
-    @NotNull(message = "Date of birth is required")
-    @Past(message = "Date of birth must be in the past")
-    private LocalDate dateOfBirth;
-
-    @NotBlank(message = "Nationality is required")
-    private String nationality;
-
-    @NotBlank(message = "Gender is required")
-    private String gender;
 }

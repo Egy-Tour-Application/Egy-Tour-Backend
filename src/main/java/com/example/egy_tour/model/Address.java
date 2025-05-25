@@ -23,7 +23,6 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    @JsonIgnore
     private Address parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -34,6 +33,16 @@ public class Address {
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<TimeSlot> timeSlots;
+
+    public String getFullAddressName() {
+        StringBuilder addressBuilder = new StringBuilder(name);
+        Address current = parent;
+        while (current != null) {
+            addressBuilder.append(", ").append(current.getName());
+            current = current.getParent();
+        }
+        return addressBuilder.toString();
+    }
 
     public Address(String name) {
         this.name = name;
