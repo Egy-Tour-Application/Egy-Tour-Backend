@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -40,13 +39,11 @@ public class TourismSpot {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "opening_time")
-    private Date openingTime;
+    private String openingTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "closing_time")
-    private Date closingTime;
+    private String closingTime;
 
     @Column(name = "latitude")
     private double latitude;
@@ -62,4 +59,16 @@ public class TourismSpot {
 
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<Booking> bookings;
+
+    public TourismSpot(String title, String description, String type, double egyptianPrice, double foreignerPrice, Address address, String openingTime, String closingTime, String image) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.egyptianPrice = egyptianPrice;
+        this.foreignerPrice = foreignerPrice;
+        this.address = address;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
+        this.image = image;
+    }
 }

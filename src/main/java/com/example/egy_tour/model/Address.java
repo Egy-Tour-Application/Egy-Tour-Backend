@@ -1,10 +1,8 @@
 package com.example.egy_tour.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,17 +13,17 @@ import java.util.List;
 @Getter
 @Setter
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private Address parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -36,4 +34,9 @@ public class Address {
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<TimeSlot> timeSlots;
+
+    public Address(String name) {
+        this.name = name;
+    }
+
 }
