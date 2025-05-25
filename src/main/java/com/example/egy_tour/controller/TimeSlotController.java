@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/time-slots")
+@RequestMapping("/time-slots")
 public class TimeSlotController {
 
     @Autowired
@@ -47,7 +47,7 @@ public class TimeSlotController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public ResponseEntity<List<TourGuide>> findAvailableTourGuides(@Valid @RequestBody SearchTimeSlotsDTO searchDTO) {
         List<TourGuide> availableTourGuides = timeSlotService.findAvailableTourGuides(searchDTO);
         return ResponseEntity.ok(availableTourGuides);

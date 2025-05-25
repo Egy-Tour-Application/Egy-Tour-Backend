@@ -39,17 +39,6 @@ public class TourGuideService {
                 .orElseThrow(() -> new EntityNotFoundException("Tour guide not found"));
     }
 
-    public TourGuide getTourGuideByUserId(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        if (user.getTourGuide() == null) {
-            throw new EntityNotFoundException("User is not a tour guide");
-        }
-
-        return user.getTourGuide();
-    }
-
     @Transactional
     public void deleteTourGuide(Long tourGuideId) {
         TourGuide tourGuide = tourGuideRepository.findById(tourGuideId)

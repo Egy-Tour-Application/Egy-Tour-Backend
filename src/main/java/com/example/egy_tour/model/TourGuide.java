@@ -16,12 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 public class TourGuide {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long userId;
+    private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     @MapsId
     private User user;
 

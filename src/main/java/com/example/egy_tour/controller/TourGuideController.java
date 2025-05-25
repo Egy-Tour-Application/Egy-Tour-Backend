@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/tour-guides")
+@RequestMapping("/tour-guides")
 public class TourGuideController {
 
     @Autowired
@@ -24,12 +24,6 @@ public class TourGuideController {
     @GetMapping("/{id}")
     public ResponseEntity<TourGuide> getTourGuide(@PathVariable Long id) {
         TourGuide tourGuide = tourGuideService.getTourGuide(id);
-        return ResponseEntity.ok(tourGuide);
-    }
-
-    @GetMapping("/user/{id}")
-    public ResponseEntity<TourGuide> getTourGuideByUserId(@PathVariable Long id) {
-        TourGuide tourGuide = tourGuideService.getTourGuideByUserId(id);
         return ResponseEntity.ok(tourGuide);
     }
 
