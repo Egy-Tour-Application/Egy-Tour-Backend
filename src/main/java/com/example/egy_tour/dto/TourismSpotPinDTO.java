@@ -1,5 +1,4 @@
 package com.example.egy_tour.dto;
-import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,16 +28,7 @@ public class TourismSpotPinDTO {
         this.description = tourismSpot.getDescription();
         this.egyptianPrice = tourismSpot.getEgyptianPrice();
         this.foreignerPrice = tourismSpot.getForeignerPrice();
-
-        StringBuilder stringBuilder = new StringBuilder(tourismSpot.getAddress().getName());
-        Address currentAddress = tourismSpot.getAddress().getParent();
-        while (currentAddress != null) {
-            stringBuilder.append(", ");
-            stringBuilder.append(currentAddress.getName());
-            currentAddress = currentAddress.getParent();
-        }
-        address = stringBuilder.toString();
-
+        address = tourismSpot.getAddress().getFullAddressName();
         this.latitude = tourismSpot.getLatitude();
         this.longitude = tourismSpot.getLongitude();
         this.openingTime = tourismSpot.getOpeningTime();
