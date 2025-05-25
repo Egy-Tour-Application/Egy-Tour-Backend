@@ -43,11 +43,8 @@ public class TourismSpotController {
                 .map(spot -> {
                     Map<String, Object> place = new HashMap<>();
                     place.put("name", spot.getTitle());
-                    place.put("position", Map.of(
-                            "latitude", spot.getLatitude(),
-                            "longitude", spot.getLongitude()
-                    ));
-                    place.put("description", spot.getDescription());
+                    place.put("latitude", spot.getLatitude());
+                    place.put("longitude", spot.getLongitude());
                     place.put("imageUrl", spot.getImage());
                     place.put("egyptianPrice", spot.getEgyptianPrice());
                     place.put("foreignerPrice", spot.getForeignerPrice());
