@@ -16,6 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TourGuide {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long userId;
 
     @OneToOne

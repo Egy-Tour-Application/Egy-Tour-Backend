@@ -48,8 +48,14 @@ public class TourismSpot {
     @Column(name = "closing_time")
     private Date closingTime;
 
-    @Column(name = "location_link")
-    private String locationLink;
+    @Column(name = "latitude")
+    private double latitude;
+
+    @Column(name = "longitude")
+    private double longitude;
+
+    @Column(name = "image")
+    private String image;
 
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<TourismSpotReview> reviews;
