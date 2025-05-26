@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TourGuideResponseDTO {
     private Long id;
+    private double price;
     private UserResponseDTO user;
     private List<TimeSlotResponseDTO> timeSlots;
 }

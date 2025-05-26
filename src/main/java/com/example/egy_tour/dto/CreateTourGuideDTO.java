@@ -13,4 +13,7 @@ import lombok.Setter;
 public class CreateTourGuideDTO {
     @NotNull
     private Long userId;
+
+    @NotNull
+    private double price;
 }
