@@ -1,6 +1,9 @@
 package com.example.egy_tour.service;
 
 import com.example.egy_tour.dto.CreateTourGuideDTO;
+import com.example.egy_tour.dto.TimeSlotResponseDTO;
+import com.example.egy_tour.dto.TourGuideResponseDTO;
+import com.example.egy_tour.dto.UserResponseDTO;
 import com.example.egy_tour.model.TourGuide;
 import com.example.egy_tour.model.User;
 import com.example.egy_tour.repository.TourGuideRepository;
@@ -9,6 +12,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class TourGuideService {
@@ -45,4 +50,5 @@ public class TourGuideService {
                 .orElseThrow(() -> new EntityNotFoundException("Tour guide not found"));
         tourGuideRepository.delete(tourGuide);
     }
+
 }

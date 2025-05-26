@@ -1,6 +1,7 @@
 package com.example.egy_tour.controller;
 
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
+import com.example.egy_tour.dto.TourismSpotPinDTO;
 import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.service.TourismSpotService;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tourism-spot")
@@ -33,4 +35,11 @@ public class TourismSpotController {
         return tourismSpotService.getAllTourismSpots();
     }
 
+    @GetMapping("/map-locations")
+    public List<TourismSpotPinDTO> getTourismSpotsForMap() {
+        List<TourismSpot> spots = tourismSpotService.getAllTourismSpots();
+        return spots.stream()
+                .map(TourismSpotPinDTO::new)
+                .collect(Collectors.toList());
+    }
 }

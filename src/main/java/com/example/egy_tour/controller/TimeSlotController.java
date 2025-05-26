@@ -1,15 +1,17 @@
 package com.example.egy_tour.controller;
 
-import com.example.egy_tour.dto.CreateTimeSlotDTO;
-import com.example.egy_tour.dto.SearchTimeSlotsDTO;
+import com.example.egy_tour.dto.*;
 import com.example.egy_tour.model.TimeSlot;
 import com.example.egy_tour.model.TourGuide;
+import com.example.egy_tour.model.User;
 import com.example.egy_tour.service.TimeSlotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -48,8 +50,41 @@ public class TimeSlotController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<TourGuide>> findAvailableTourGuides(@Valid @RequestBody SearchTimeSlotsDTO searchDTO) {
-        List<TourGuide> availableTourGuides = timeSlotService.findAvailableTourGuides(searchDTO);
-        return ResponseEntity.ok(availableTourGuides);
+    public ResponseEntity<List<TourGuideResponseDTO>> findAvailableTourGuides(
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @RequestParam Long addressId
+    ) {
+        List<TourGuide> tourGuides = timeSlotService.findAvailableTourGuides(
+                new SearchTimeSlotsDTO(startDate, endDate, addressId)
+        );
+
+        List<TourGuideResponseDTO> dtoList = tourGuides.stream()
+                .map(this::toTourGuideResponseDTO)
+                .toList();
+
+        return ResponseEntity.ok(dtoList);
     }
+
+    public TourGuideResponseDTO toTourGuideResponseDTO(TourGuide tourGuide) {
+        User user = tourGuide.getUser();
+        UserResponseDTO userDTO = new UserResponseDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getNationality(),
+                user.getGender()
+        );
+
+        List<TimeSlotResponseDTO> timeSlotsDTO = tourGuide.getTimeSlots().stream()
+                .map(ts -> new TimeSlotResponseDTO(ts.getId(), ts.getStartTime(), ts.getEndTime()))
+                .toList();
+
+        return new TourGuideResponseDTO(tourGuide.getId(), userDTO, timeSlotsDTO);
+    }
+
+
+
 }

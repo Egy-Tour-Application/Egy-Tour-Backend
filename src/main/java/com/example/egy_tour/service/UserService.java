@@ -1,6 +1,5 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.CreateUserDTO;
 import com.example.egy_tour.model.User;
 import com.example.egy_tour.repository.UserRepository;
 import jakarta.transaction.Transactional;

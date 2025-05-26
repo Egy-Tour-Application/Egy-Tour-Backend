@@ -1,5 +1,6 @@
 package com.example.egy_tour.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +25,15 @@ public class TourGuide {
     @MapsId
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<TourGuideReview> tourGuideReviews;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<TimeSlot> timeSlots;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 }

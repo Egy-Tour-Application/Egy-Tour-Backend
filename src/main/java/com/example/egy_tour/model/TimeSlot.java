@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,13 +22,12 @@ public class TimeSlot {
     @Column(name = "id")
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
+
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private LocalDate startTime;
 
     @Column(name = "end_time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDate endTime;
 
     @ManyToOne
     @JoinColumn(name = "tour_guide_id", nullable = false)

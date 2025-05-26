@@ -32,6 +32,8 @@ public class TourismSpotService {
                 tourismSpotAddress,
                 createTourismSpotDTO.getOpening_time(),
                 createTourismSpotDTO.getClosing_time(),
+                createTourismSpotDTO.getLatitude(),
+                createTourismSpotDTO.getLongitude(),
                 createTourismSpotDTO.getImage()
         );
         return tourismSpotRepository.save(tourismSpot);
