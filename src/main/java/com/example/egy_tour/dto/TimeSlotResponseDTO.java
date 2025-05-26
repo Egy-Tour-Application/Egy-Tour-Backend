@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimeSlotResponseDTO {
     private Long id;
-    private LocalDate startTime;
-    private LocalDate endTime;
+    private LocalDateTime  startTime;
+    private LocalDateTime endTime;
 
 }

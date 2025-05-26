@@ -25,6 +25,9 @@ public class TourGuide {
     @MapsId
     private User user;
 
+    @Column(name = "price_hour", nullable = false)
+    private double price;
+
     @JsonIgnore
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
     private List<TourGuideReview> tourGuideReviews;

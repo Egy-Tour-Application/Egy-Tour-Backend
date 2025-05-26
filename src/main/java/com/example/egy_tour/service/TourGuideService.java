@@ -36,6 +36,8 @@ public class TourGuideService {
 
         TourGuide tourGuide = new TourGuide();
         tourGuide.setUser(user);
+        tourGuide.setPrice(createTourGuideDTO.getPrice());
+
         return tourGuideRepository.save(tourGuide);
     }
 
@@ -49,6 +51,36 @@ public class TourGuideService {
         TourGuide tourGuide = tourGuideRepository.findById(tourGuideId)
                 .orElseThrow(() -> new EntityNotFoundException("Tour guide not found"));
         tourGuideRepository.delete(tourGuide);
+    }
+
+    @Transactional
+    public TourGuide updateTourGuidePrice(Long tourGuideId, Double price) {
+        TourGuide tourGuide = tourGuideRepository.findById(tourGuideId)
+                .orElseThrow(() -> new EntityNotFoundException("Tour guide not found"));
+
+        tourGuide.setPrice(price);
+
+        return tourGuideRepository.save(tourGuide);
+    }
+
+
+    public TourGuideResponseDTO toTourGuideResponseDTO(TourGuide tourGuide) {
+        User user = tourGuide.getUser();
+        UserResponseDTO userDTO = new UserResponseDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getNationality(),
+                user.getGender()
+        );
+
+        List<TimeSlotResponseDTO> timeSlotsDTO = tourGuide.getTimeSlots().stream()
+                .map(ts -> new TimeSlotResponseDTO(ts.getId(), ts.getStartTime(), ts.getEndTime()))
+                .toList();
+
+        return new TourGuideResponseDTO(tourGuide.getId(),tourGuide.getPrice(), userDTO, timeSlotsDTO);
     }
 
 }

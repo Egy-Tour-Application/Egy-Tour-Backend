@@ -23,5 +23,4 @@ public class CreateTourismSpotDTO {
     private double longitude;
     private String address;
     private Long addressId;
-
 }
