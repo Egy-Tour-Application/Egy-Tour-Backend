@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "programs")
@@ -33,5 +34,5 @@ public class Program {
 
     @JsonIgnore
     @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
-    private ArrayList<Booking> bookings;
+    private List<Booking> bookings;
 }
