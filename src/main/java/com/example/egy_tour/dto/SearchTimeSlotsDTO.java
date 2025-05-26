@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -17,9 +18,12 @@ public class SearchTimeSlotsDTO {
 
     @NotNull(message = "Start time is required")
     @FutureOrPresent(message = "Start time must be in the present or future")
-    private Date startTime;
+    private LocalDate startTime;
 
     @NotNull(message = "End time is required")
     @FutureOrPresent(message = "End time must be in the present or future")
-    private Date endTime;
+    private LocalDate endTime;
+
+    @NotNull(message = "Address ID is required")
+    private Long addressId;
 }
