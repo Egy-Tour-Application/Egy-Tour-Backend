@@ -5,18 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TourismSpotPinDTO {
-    private String title;
-    private String description;
+    private String name;
     private double egyptianPrice;
     private double foreignerPrice;
-    private String address;
     private String openingTime;
     private String closingTime;
     private double latitude;
@@ -24,11 +20,9 @@ public class TourismSpotPinDTO {
     private String image;
 
     public TourismSpotPinDTO(TourismSpot tourismSpot) {
-        this.title = tourismSpot.getTitle();
-        this.description = tourismSpot.getDescription();
+        this.name = tourismSpot.getTitle();
         this.egyptianPrice = tourismSpot.getEgyptianPrice();
         this.foreignerPrice = tourismSpot.getForeignerPrice();
-        address = tourismSpot.getAddress().getFullAddressName();
         this.latitude = tourismSpot.getLatitude();
         this.longitude = tourismSpot.getLongitude();
         this.openingTime = tourismSpot.getOpeningTime();

@@ -1,5 +1,6 @@
 package com.example.egy_tour.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,13 +55,16 @@ public class TourismSpot {
     @Column(name = "image")
     private String image;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<TourismSpotReview> reviews;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    public TourismSpot(String title, String description, String type, double egyptianPrice, double foreignerPrice, Address address, String openingTime, String closingTime, String image) {
+    public TourismSpot(String title, String description, String type, double egyptianPrice, double foreignerPrice,
+                       Address address, String openingTime, String closingTime, double latitude, double longitude, String image) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -69,6 +73,8 @@ public class TourismSpot {
         this.address = address;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.image = image;
     }
 }
