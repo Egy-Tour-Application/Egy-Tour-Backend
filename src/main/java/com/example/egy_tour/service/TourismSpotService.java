@@ -4,6 +4,7 @@ import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.repository.TourismSpotRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,30 +13,22 @@ import java.util.List;
 public class TourismSpotService {
     private final TourismSpotRepository tourismSpotRepository;
     private final AddressService addressService;
+    private final ModelMapper mapper;
 
-    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService) {
+
+    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService, ModelMapper mapper) {
         this.tourismSpotRepository = tourismSpotRepository;
         this.addressService = addressService;
+        this.mapper = mapper;
     }
 
     public TourismSpot createTourismSpot(CreateTourismSpotDTO createTourismSpotDTO) {
-        Address tourismSpotAddress = addressService.getAddressById(createTourismSpotDTO.getAddressId());
+        Address tourismSpotAddress = addressService.getAddressByName(createTourismSpotDTO.getAddress());
         if (tourismSpotAddress == null) {
             throw new RuntimeException("Address not found");
         }
-        TourismSpot tourismSpot = new TourismSpot(
-                createTourismSpotDTO.getTitle(),
-                createTourismSpotDTO.getDescription(),
-                createTourismSpotDTO.getType(),
-                createTourismSpotDTO.getEgyptian_price(),
-                createTourismSpotDTO.getForeigner_price(),
-                tourismSpotAddress,
-                createTourismSpotDTO.getOpening_time(),
-                createTourismSpotDTO.getClosing_time(),
-                createTourismSpotDTO.getLatitude(),
-                createTourismSpotDTO.getLongitude(),
-                createTourismSpotDTO.getImage()
-        );
+        TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);
+        tourismSpot.setAddress(tourismSpotAddress);
         return tourismSpotRepository.save(tourismSpot);
     }
 

@@ -64,13 +64,12 @@ public class TourismSpot {
     private List<Booking> bookings;
 
     public TourismSpot(String title, String description, String type, double egyptianPrice, double foreignerPrice,
-                       Address address, String openingTime, String closingTime, double latitude, double longitude, String image) {
+                       String openingTime, String closingTime, double latitude, double longitude, String image) {
         this.title = title;
         this.description = description;
         this.type = type;
         this.egyptianPrice = egyptianPrice;
         this.foreignerPrice = foreignerPrice;
-        this.address = address;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
         this.latitude = latitude;

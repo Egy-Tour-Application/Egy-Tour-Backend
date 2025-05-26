@@ -14,13 +14,12 @@ public class CreateTourismSpotDTO {
     private String title;
     private String description;
     private String type;
-    private double foreigner_price;
-    private double egyptian_price;
+    private double foreignerPrice;
+    private double egyptianPrice;
     private String image;
-    private String opening_time;
-    private String closing_time;
+    private String openingTime;
+    private String closingTime;
     private double latitude;
     private double longitude;
     private String address;
-    private Long addressId;
 }

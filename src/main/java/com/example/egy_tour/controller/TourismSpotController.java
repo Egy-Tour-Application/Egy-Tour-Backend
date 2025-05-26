@@ -2,7 +2,10 @@ package com.example.egy_tour.controller;
 
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.dto.TourismSpotPinDTO;
+import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
+import com.example.egy_tour.repository.AddressRepository;
+import com.example.egy_tour.service.AddressService;
 import com.example.egy_tour.service.TourismSpotService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +26,7 @@ public class TourismSpotController {
 
     @PostMapping
     public ResponseEntity<TourismSpot> createTourismSpot(@RequestBody CreateTourismSpotDTO createTourismSpotDTO) {
-        try {
-            return ResponseEntity.ok(tourismSpotService.createTourismSpot(createTourismSpotDTO));
-        } catch (Exception e) {
-            return new ResponseEntity("Invalid request: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(tourismSpotService.createTourismSpot(createTourismSpotDTO));
     }
 
     @GetMapping
