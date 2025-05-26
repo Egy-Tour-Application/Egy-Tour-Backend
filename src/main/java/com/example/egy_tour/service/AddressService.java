@@ -32,4 +32,8 @@ public class AddressService {
     public Address getAddressById(Long id) {
         return addressRepository.findById(id).orElse(null);
     }
+
+    public Address getAddressByName(String name) {
+        return addressRepository.findAddressByName(name);
+    }
 }

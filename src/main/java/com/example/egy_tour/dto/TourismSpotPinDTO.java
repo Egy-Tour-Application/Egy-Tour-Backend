@@ -1,4 +1,5 @@
 package com.example.egy_tour.dto;
+
 import com.example.egy_tour.model.TourismSpot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,8 +18,8 @@ public class TourismSpotPinDTO {
     private double egyptianPrice;
     private double foreignerPrice;
     private String address;
-    private Date openingTime;
-    private Date closingTime;
+    private String openingTime;
+    private String closingTime;
     private double latitude;
     private double longitude;
     private String image;
