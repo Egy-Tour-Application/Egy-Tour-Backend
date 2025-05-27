@@ -1,9 +1,6 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.BookingRequestDTO;
-import com.example.egy_tour.dto.BookingResponseDTO;
-import com.example.egy_tour.dto.CreateBookingDTO;
-import com.example.egy_tour.dto.UpdateBookingDTO;
+import com.example.egy_tour.dto.*;
 import com.example.egy_tour.model.*;
 import com.example.egy_tour.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -107,5 +104,35 @@ public class BookingService {
         booking.setStartTime(updateBookingDTO.getStartTime());
         booking.setEndTime(updateBookingDTO.getEndTime());
         return bookingRepository.save(booking);
+    }
+
+    public BookingResponseDTO mapToBookingResponse(Booking booking){
+        User user = booking.getUser();
+        UserResponseDTO userDTO = new UserResponseDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getNationality(),
+                user.getGender()
+        );
+
+        TourGuide tourGuide = booking.getTourGuide();
+        TourGuideResponseDTO tourGuideDTO = new TourGuideResponseDTO(
+                tourGuide.getId(),
+                tourGuide.getPrice(),
+                userDTO,
+                null
+        );
+
+        return new BookingResponseDTO(
+                booking.getId(),
+                booking.getPrice(),
+                tourGuideDTO,
+                booking.getStartTime(),
+                booking.getEndTime()
+        );
+
     }
 }

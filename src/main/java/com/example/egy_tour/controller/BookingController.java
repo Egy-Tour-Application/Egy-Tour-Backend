@@ -27,9 +27,13 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Booking>> getBookingById(@PathVariable Long id) {
+    public ResponseEntity<List<BookingResponseDTO>> getBookingById(@PathVariable Long id) {
         List<Booking> booking = bookingService.getBookingByUser(id);
-        return ResponseEntity.ok(booking);
+        List<BookingResponseDTO> bookingDTOs = booking.stream()
+                .map(bookingService::mapToBookingResponse)
+                .toList();
+
+        return ResponseEntity.ok(bookingDTOs);
     }
 
     @DeleteMapping("/{id}")

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class BookingResponseDTO {
     private Long id;
     private double price;
+    private TourGuideResponseDTO tourGuide;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
