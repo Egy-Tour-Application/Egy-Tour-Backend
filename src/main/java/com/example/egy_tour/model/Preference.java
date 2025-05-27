@@ -21,4 +21,8 @@ public class Preference {
 
     @Column(name = "name")
     private String name;
+
+    public Preference(String name) {
+        this.name = name;
+    }
 }

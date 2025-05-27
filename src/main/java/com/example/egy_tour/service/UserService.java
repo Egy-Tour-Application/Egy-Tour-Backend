@@ -1,7 +1,10 @@
 package com.example.egy_tour.service;
 
+import com.example.egy_tour.dto.AddUserPreferenceDTO;
 import com.example.egy_tour.dto.UpdateUserDTO;
+import com.example.egy_tour.model.Preference;
 import com.example.egy_tour.model.User;
+import com.example.egy_tour.repository.PreferenceRepository;
 import com.example.egy_tour.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +16,12 @@ import java.util.List;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final PreferenceRepository preferenceRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PreferenceRepository preferenceRepository) {
         this.userRepository = userRepository;
+        this.preferenceRepository = preferenceRepository;
     }
 
     public User getUserById(Long id) {
@@ -39,6 +44,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public boolean addUserPreference(AddUserPreferenceDTO addUserPreferenceDTO) {
+        User user = userRepository.findById(addUserPreferenceDTO.getUserId()).orElse(null);
+        if (user == null) {
+            return false;
+        }
+
+        Preference preference = preferenceRepository.findByName(addUserPreferenceDTO.getPreferenceName()).orElse(null);
+        if (preference == null) {
+            preference = preferenceRepository.save(new Preference(addUserPreferenceDTO.getPreferenceName()));
+        }
+
+        if (!user.getPreferences().contains(preference)) {
+            user.getPreferences().add(preference);
+            userRepository.save(user);
+        }
+        return true;
+    }
 
 
 }
