@@ -1,5 +1,7 @@
 package com.example.egy_tour.service;
 
+import com.example.egy_tour.dto.BookingRequestDTO;
+import com.example.egy_tour.dto.BookingResponseDTO;
 import com.example.egy_tour.dto.CreateBookingDTO;
 import com.example.egy_tour.dto.UpdateBookingDTO;
 import com.example.egy_tour.model.*;
@@ -65,8 +67,29 @@ public class BookingService {
         return bookingRepository.findByUser(user);
 
     }
-    //@Transactional
-    //public Booking getBookingforTourGuide();
+    @Transactional
+    public BookingResponseDTO checkForBooking(BookingRequestDTO bookingRequestDTO){
+        User user = userRepository.findById(bookingRequestDTO.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        TourGuide tourGuide = tourGuideRepository.findById(bookingRequestDTO.getTourGuideId())
+                .orElseThrow(() -> new EntityNotFoundException("TourGuide not found"));
+
+        Booking booking = bookingRepository.findByUserAndTourGuideAndStartTimeAndEndTime(
+                user,
+                tourGuide,
+                bookingRequestDTO.getStartTime(),
+                bookingRequestDTO.getEndTime()
+        );
+
+        if (booking == null) return null;
+
+        BookingResponseDTO dto = new BookingResponseDTO();
+        dto.setId(booking.getId());
+        dto.setPrice(booking.getPrice());
+        dto.setStartTime(booking.getStartTime());
+        dto.setEndTime(booking.getEndTime());
+        return dto;
+    }
 
     @Transactional
     public void deleteBooking(Long id) {
