@@ -1,6 +1,7 @@
 package com.example.egy_tour.controller;
 
 import com.example.egy_tour.dto.UpdateUserDTO;
+import com.example.egy_tour.dto.UserResponseDTO;
 import com.example.egy_tour.model.User;
 import com.example.egy_tour.service.UserService;
 import jakarta.validation.Valid;
@@ -23,12 +24,21 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        // print the coming request
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         System.out.println("Received request to get user with ID: " + id);
         User user = userService.getUserById(id);
+
         if (user != null) {
-            return ResponseEntity.ok(user);
+            UserResponseDTO userResponseDTO = new UserResponseDTO(
+                    user.getId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getPhone(),
+                    user.getNationality(),
+                    user.getGender()
+            );
+            return ResponseEntity.ok(userResponseDTO);
         } else {
             return ResponseEntity.noContent().build();
         }
