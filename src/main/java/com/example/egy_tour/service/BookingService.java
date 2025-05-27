@@ -65,6 +65,8 @@ public class BookingService {
         return bookingRepository.findByUser(user);
 
     }
+    //@Transactional
+    //public Booking getBookingforTourGuide();
 
     @Transactional
     public void deleteBooking(Long id) {
