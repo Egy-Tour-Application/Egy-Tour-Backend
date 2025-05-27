@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -22,9 +24,22 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        // print the coming request
+        System.out.println("Received request to get user with ID: " + id);
         User user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        System.out.println("Received request to get all users");
+        List<User> users = userService.getAllUsers();
+        if (users != null && !users.isEmpty()) {
+            return ResponseEntity.ok(users);
         } else {
             return ResponseEntity.noContent().build();
         }
