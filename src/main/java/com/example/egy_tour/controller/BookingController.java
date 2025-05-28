@@ -1,5 +1,7 @@
 package com.example.egy_tour.controller;
 
+import com.example.egy_tour.dto.BookingRequestDTO;
+import com.example.egy_tour.dto.BookingResponseDTO;
 import com.example.egy_tour.dto.CreateBookingDTO;
 import com.example.egy_tour.dto.UpdateBookingDTO;
 import com.example.egy_tour.model.Booking;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -24,9 +27,13 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Booking>> getBookingById(@PathVariable Long id) {
+    public ResponseEntity<List<BookingResponseDTO>> getBookingById(@PathVariable Long id) {
         List<Booking> booking = bookingService.getBookingByUser(id);
-        return ResponseEntity.ok(booking);
+        List<BookingResponseDTO> bookingDTOs = booking.stream()
+                .map(bookingService::mapToBookingResponse)
+                .toList();
+
+        return ResponseEntity.ok(bookingDTOs);
     }
 
     @DeleteMapping("/{id}")
@@ -43,5 +50,23 @@ public class BookingController {
         Booking booking = bookingService.updateBooking(id, bookingDTO);
         return ResponseEntity.ok(booking);
     }
+
+    @GetMapping("/check")
+    public ResponseEntity<BookingResponseDTO> checkBooking(
+            @RequestParam Long userId,
+            @RequestParam Long tourGuideId,
+            @RequestParam LocalDateTime startTime,
+            @RequestParam LocalDateTime endTime) {
+
+        BookingRequestDTO bookingRequestDTO = new BookingRequestDTO(userId, tourGuideId, startTime, endTime);
+        BookingResponseDTO bookingResponseDTO = bookingService.checkForBooking(bookingRequestDTO);
+
+        if (bookingResponseDTO == null) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+
+        return ResponseEntity.ok(bookingResponseDTO);
+    }
+
 
 }

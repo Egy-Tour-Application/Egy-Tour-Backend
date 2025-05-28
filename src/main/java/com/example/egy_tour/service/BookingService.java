@@ -1,7 +1,6 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.CreateBookingDTO;
-import com.example.egy_tour.dto.UpdateBookingDTO;
+import com.example.egy_tour.dto.*;
 import com.example.egy_tour.model.*;
 import com.example.egy_tour.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -65,8 +64,29 @@ public class BookingService {
         return bookingRepository.findByUser(user);
 
     }
-    //@Transactional
-    //public Booking getBookingforTourGuide();
+    @Transactional
+    public BookingResponseDTO checkForBooking(BookingRequestDTO bookingRequestDTO){
+        User user = userRepository.findById(bookingRequestDTO.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        TourGuide tourGuide = tourGuideRepository.findById(bookingRequestDTO.getTourGuideId())
+                .orElseThrow(() -> new EntityNotFoundException("TourGuide not found"));
+
+        Booking booking = bookingRepository.findByUserAndTourGuideAndStartTimeAndEndTime(
+                user,
+                tourGuide,
+                bookingRequestDTO.getStartTime(),
+                bookingRequestDTO.getEndTime()
+        );
+
+        if (booking == null) return null;
+
+        BookingResponseDTO dto = new BookingResponseDTO();
+        dto.setId(booking.getId());
+        dto.setPrice(booking.getPrice());
+        dto.setStartTime(booking.getStartTime());
+        dto.setEndTime(booking.getEndTime());
+        return dto;
+    }
 
     @Transactional
     public void deleteBooking(Long id) {
@@ -84,5 +104,35 @@ public class BookingService {
         booking.setStartTime(updateBookingDTO.getStartTime());
         booking.setEndTime(updateBookingDTO.getEndTime());
         return bookingRepository.save(booking);
+    }
+
+    public BookingResponseDTO mapToBookingResponse(Booking booking){
+        User user = booking.getUser();
+        UserResponseDTO userDTO = new UserResponseDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getNationality(),
+                user.getGender()
+        );
+
+        TourGuide tourGuide = booking.getTourGuide();
+        TourGuideResponseDTO tourGuideDTO = new TourGuideResponseDTO(
+                tourGuide.getId(),
+                tourGuide.getPrice(),
+                userDTO,
+                null
+        );
+
+        return new BookingResponseDTO(
+                booking.getId(),
+                booking.getPrice(),
+                tourGuideDTO,
+                booking.getStartTime(),
+                booking.getEndTime()
+        );
+
     }
 }
