@@ -8,26 +8,30 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class TourismSpotPinDTO {
-    private String name;
-    private double egyptianPrice;
+@NoArgsConstructor
+public class TourismSpotResponse {
+    private Long id;
+    private String title;
+    private String description;
+    private String type;
     private double foreignerPrice;
+    private double egyptianPrice;
     private String openingTime;
     private String closingTime;
-    private double latitude;
-    private double longitude;
     private byte[] image;
+    private String address;
 
-    public TourismSpotPinDTO(TourismSpot tourismSpot) {
-        this.name = tourismSpot.getTitle();
-        this.egyptianPrice = tourismSpot.getEgyptianPrice();
+    public TourismSpotResponse(TourismSpot tourismSpot) {
+        this.id = tourismSpot.getId();
+        this.title = tourismSpot.getTitle();
+        this.description = tourismSpot.getDescription();
+        this.type = tourismSpot.getType();
         this.foreignerPrice = tourismSpot.getForeignerPrice();
-        this.latitude = tourismSpot.getLatitude();
-        this.longitude = tourismSpot.getLongitude();
+        this.egyptianPrice = tourismSpot.getEgyptianPrice();
         this.openingTime = tourismSpot.getOpeningTime();
         this.closingTime = tourismSpot.getClosingTime();
         this.image = tourismSpot.getImage();
+        this.address = tourismSpot.getAddress().getName();
     }
 }

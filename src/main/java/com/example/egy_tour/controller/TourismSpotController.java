@@ -2,6 +2,7 @@ package com.example.egy_tour.controller;
 
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.dto.TourismSpotPinDTO;
+import com.example.egy_tour.dto.TourismSpotResponse;
 import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.repository.AddressRepository;
@@ -30,8 +31,11 @@ public class TourismSpotController {
     }
 
     @GetMapping
-    public List<TourismSpot> getAllTourismSpots() {
-        return tourismSpotService.getAllTourismSpots();
+    public List<TourismSpotResponse> getAllTourismSpots() {
+        List<TourismSpot> tourismSpot = tourismSpotService.getAllTourismSpots();
+        return tourismSpot.stream()
+                .map(TourismSpotResponse::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/map-locations")

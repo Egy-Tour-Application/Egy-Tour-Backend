@@ -52,8 +52,8 @@ public class TourismSpot {
     @Column(name = "longitude")
     private double longitude;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image" , columnDefinition = "MEDIUMBLOB")
+    private byte[] image;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
@@ -63,17 +63,4 @@ public class TourismSpot {
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    public TourismSpot(String title, String description, String type, double egyptianPrice, double foreignerPrice,
-                       String openingTime, String closingTime, double latitude, double longitude, String image) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.egyptianPrice = egyptianPrice;
-        this.foreignerPrice = foreignerPrice;
-        this.openingTime = openingTime;
-        this.closingTime = closingTime;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.image = image;
-    }
 }

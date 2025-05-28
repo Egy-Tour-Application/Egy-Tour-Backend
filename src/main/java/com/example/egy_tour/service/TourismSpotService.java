@@ -13,23 +13,31 @@ import java.util.List;
 public class TourismSpotService {
     private final TourismSpotRepository tourismSpotRepository;
     private final AddressService addressService;
+    private final ImageService imageService;
     private final ModelMapper mapper;
 
 
-    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService, ModelMapper mapper) {
+    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService, ModelMapper mapper, ImageService imageService) {
         this.tourismSpotRepository = tourismSpotRepository;
         this.addressService = addressService;
         this.mapper = mapper;
+        this.imageService = imageService;
     }
 
     public TourismSpot createTourismSpot(CreateTourismSpotDTO createTourismSpotDTO) {
-        Address tourismSpotAddress = addressService.getAddressByName(createTourismSpotDTO.getAddress());
-        if (tourismSpotAddress == null) {
-            throw new RuntimeException("Address not found");
+        try {
+            Address tourismSpotAddress = addressService.getAddressByName(createTourismSpotDTO.getAddress());
+            if (tourismSpotAddress == null) {
+                throw new RuntimeException("Address not found");
+            }
+            byte[] image = imageService.getImageFromUrl(createTourismSpotDTO.getImageUrl());
+            TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);
+            tourismSpot.setImage(image);
+            tourismSpot.setAddress(tourismSpotAddress);
+            return tourismSpotRepository.save(tourismSpot);
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating tourism spot");
         }
-        TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);
-        tourismSpot.setAddress(tourismSpotAddress);
-        return tourismSpotRepository.save(tourismSpot);
     }
 
     public List<TourismSpot> getAllTourismSpots() {
