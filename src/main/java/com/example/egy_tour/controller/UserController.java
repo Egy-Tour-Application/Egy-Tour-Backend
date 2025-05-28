@@ -1,6 +1,7 @@
 package com.example.egy_tour.controller;
 
 import com.example.egy_tour.dto.AddUserPreferenceDTO;
+import com.example.egy_tour.dto.AddUserTourismSpotDTO;
 import com.example.egy_tour.dto.UpdateUserDTO;
 import com.example.egy_tour.dto.UserResponseDTO;
 import com.example.egy_tour.model.User;
@@ -69,5 +70,10 @@ public class UserController {
     @PostMapping("/add-preference")
     public ResponseEntity<Boolean> updateUser(@Valid @RequestBody AddUserPreferenceDTO addUserPreferenceDTO) {
         return ResponseEntity.ok(userService.addUserPreference(addUserPreferenceDTO));
+    }
+
+    @PostMapping("/add-tourism-spot")
+    public ResponseEntity<Boolean> addTourismSpot(@Valid @RequestBody AddUserTourismSpotDTO addUserTourismSpotDTO) {
+        return ResponseEntity.ok(userService.addUserTourismSpot(addUserTourismSpotDTO));
     }
 }
