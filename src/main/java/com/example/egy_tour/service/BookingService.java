@@ -41,10 +41,6 @@ public class BookingService {
         TourismSpot tourismSpot = tourismSpotRepository.findById(bookingDTO.getTourismSpotId())
                 .orElseThrow(() -> new EntityNotFoundException("TourismSpot not found"));
 
-        Program program = programRepository.findById(bookingDTO.getProgramId())
-                .orElseThrow(() -> new EntityNotFoundException("Program not found"));
-
-
         Booking booking = new Booking();
         booking.setPrice(bookingDTO.getPrice());
         booking.setStartTime(bookingDTO.getStartTime());
@@ -52,8 +48,18 @@ public class BookingService {
         booking.setUser(user);
         booking.setTourGuide(tourGuide);
         booking.setTourismSpot(tourismSpot);
-        booking.setProgram(program);
-       return bookingRepository.save(booking);
+
+        // Only set program if provided
+        if (bookingDTO.getProgramId() != null) {
+            Program program = programRepository.findById(bookingDTO.getProgramId())
+                    .orElseThrow(() -> new EntityNotFoundException("Program not found"));
+            booking.setProgram(program);
+        }
+        else{
+            booking.setProgram(null);
+        }
+
+        return bookingRepository.save(booking);
     }
 
     @Transactional
@@ -100,9 +106,10 @@ public class BookingService {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
 
-        booking.setPrice(updateBookingDTO.getPrice());
-        booking.setStartTime(updateBookingDTO.getStartTime());
-        booking.setEndTime(updateBookingDTO.getEndTime());
+        Program program = programRepository.findById(updateBookingDTO.getProgramId())
+                .orElseThrow(() -> new EntityNotFoundException("Program not found"));
+
+        booking.setProgram(program);
         return bookingRepository.save(booking);
     }
 
@@ -126,12 +133,20 @@ public class BookingService {
                 null
         );
 
+
+        TourismSpot tourismSpot = booking.getTourismSpot();
+        TourismSpotResponseDTO tourismSpotDTO = new TourismSpotResponseDTO(
+                tourismSpot.getId(),
+                tourismSpot.getTitle(),
+                tourismSpot.getDescription()
+        );
         return new BookingResponseDTO(
                 booking.getId(),
                 booking.getPrice(),
                 tourGuideDTO,
                 booking.getStartTime(),
-                booking.getEndTime()
+                booking.getEndTime(),
+                tourismSpotDTO
         );
 
     }

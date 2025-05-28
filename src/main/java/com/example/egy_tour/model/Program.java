@@ -33,6 +33,6 @@ public class Program {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "program")
     private List<Booking> bookings;
 }

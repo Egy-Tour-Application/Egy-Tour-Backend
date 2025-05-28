@@ -41,7 +41,7 @@ public class Booking {
     private TourGuide tourGuide;
 
     @ManyToOne
-    @JoinColumn(name = "program_id", nullable = false)
+    @JoinColumn(name = "program_id", nullable = true)
     private Program program;
 
     @ManyToOne

@@ -15,4 +15,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                                                    TourGuide tourGuide,
                                                                    LocalDateTime startTime, LocalDateTime endTime);
 
+    List<Booking> findByProgramId(Long programId);
 }

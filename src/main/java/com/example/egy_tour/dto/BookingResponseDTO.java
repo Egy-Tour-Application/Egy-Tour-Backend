@@ -17,5 +17,6 @@ public class BookingResponseDTO {
     private TourGuideResponseDTO tourGuide;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private TourismSpotResponseDTO tourismSpot;
 
 }

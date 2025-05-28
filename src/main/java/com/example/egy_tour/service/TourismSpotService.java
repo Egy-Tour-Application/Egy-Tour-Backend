@@ -35,4 +35,5 @@ public class TourismSpotService {
     public List<TourismSpot> getAllTourismSpots() {
         return tourismSpotRepository.findAll();
     }
+
 }

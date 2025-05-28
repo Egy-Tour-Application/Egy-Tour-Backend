@@ -1,18 +1,18 @@
 package com.example.egy_tour.dto;
 
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotNull;
+import com.example.egy_tour.model.Booking;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBookingDTO {
-    private Long programId;
+public class UpdateProgramDTO {
+    private List<Long> bookingIds;
+
 }
