@@ -1,4 +1,5 @@
 package com.example.egy_tour.dto;
+
 import com.example.egy_tour.model.TourismSpot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class TourismSpotPinDTO {
     private String closingTime;
     private double latitude;
     private double longitude;
-    private String image;
+    private byte[] image;
 
     public TourismSpotPinDTO(TourismSpot tourismSpot) {
         this.name = tourismSpot.getTitle();

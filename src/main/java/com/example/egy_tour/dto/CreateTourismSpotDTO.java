@@ -16,7 +16,7 @@ public class CreateTourismSpotDTO {
     private String type;
     private double foreignerPrice;
     private double egyptianPrice;
-    private String image;
+    private String imageUrl;
     private String openingTime;
     private String closingTime;
     private double latitude;
