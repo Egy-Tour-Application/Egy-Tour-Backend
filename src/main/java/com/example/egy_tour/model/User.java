@@ -83,6 +83,14 @@ public class User implements UserDetails {
     )
     private List<Preference> Preferences;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_liked_spots",
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "tourism_spot_id", nullable = false)
+    )
+    private List<TourismSpot> TourismSpots;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private TourGuide tourGuide;
 

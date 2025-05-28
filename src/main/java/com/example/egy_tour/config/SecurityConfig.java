@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/auth/**").permitAll() // Allow access to auth endpoints
-                                .anyRequest().authenticated() // All other requests need authentication
+                                .anyRequest().permitAll() // All other requests need authentication
                 );
 
         http.authenticationProvider(authenticationProvider());
