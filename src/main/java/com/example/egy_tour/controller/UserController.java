@@ -72,8 +72,9 @@ public class UserController {
         return ResponseEntity.ok(userService.addUserPreference(addUserPreferenceDTO));
     }
 
-    @PostMapping("/add-tourism-spot")
+    @PostMapping("/tourism-spot")
     public ResponseEntity<Boolean> addTourismSpot(@Valid @RequestBody AddUserTourismSpotDTO addUserTourismSpotDTO) {
+        System.out.println();
         return ResponseEntity.ok(userService.addUserTourismSpot(addUserTourismSpotDTO));
     }
 }

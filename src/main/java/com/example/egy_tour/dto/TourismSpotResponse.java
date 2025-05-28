@@ -1,6 +1,7 @@
 package com.example.egy_tour.dto;
 
 import com.example.egy_tour.model.TourismSpot;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class TourismSpotResponse {
     private String closingTime;
     private byte[] image;
     private String address;
+    private boolean liked;
+    private int numLikes;
 
     public TourismSpotResponse(TourismSpot tourismSpot) {
         this.id = tourismSpot.getId();

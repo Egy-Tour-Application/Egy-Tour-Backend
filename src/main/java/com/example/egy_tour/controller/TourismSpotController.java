@@ -38,6 +38,11 @@ public class TourismSpotController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/user/{id}")
+    public List<TourismSpotResponse> getAllTourismSpots(@PathVariable long id) {
+        return tourismSpotService.getAllTourismSpotsWithLikes(id);
+    }
+
     @GetMapping("/map-locations")
     public List<TourismSpotPinDTO> getTourismSpotsForMap() {
         List<TourismSpot> spots = tourismSpotService.getAllTourismSpots();
