@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/tourism-spot")
 public class TourismSpotController {
 
-    @Autowired
     private final TourismSpotService tourismSpotService;
     @Autowired
     private TourismSpotRepository tourismSpotRepository;
@@ -34,16 +33,8 @@ public class TourismSpotController {
         return ResponseEntity.ok(tourismSpotService.createTourismSpot(createTourismSpotDTO));
     }
 
-    @GetMapping
-    public List<TourismSpotResponse> getAllTourismSpots() {
-        List<TourismSpot> tourismSpot = tourismSpotService.getAllTourismSpots();
-        return tourismSpot.stream()
-                .map(TourismSpotResponse::new)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/user/{id}")
-    public List<TourismSpotResponse> getAllTourismSpots(@PathVariable long id) {
+    @GetMapping("/{id}")
+    public List<TourismSpotResponse> getAllTourismSpots(@PathVariable Long id) {
         return tourismSpotService.getAllTourismSpotsWithLikes(id);
     }
 
@@ -55,14 +46,14 @@ public class TourismSpotController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/like-spot")
+    @PostMapping("/favorite-spot")
     public ResponseEntity<Boolean> addUserLikedTourismSpot(@Valid @RequestBody UserLikedTourismSpotDTO addUserTourismSpotDTO) {
-        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO , true));
+        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO, true));
     }
 
-    @PostMapping("/unlike-spot")
+    @PostMapping("/unfavorite-spot")
     public ResponseEntity<Boolean> removeUserLikedTourismSpot(@Valid @RequestBody UserLikedTourismSpotDTO addUserTourismSpotDTO) {
-        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO , false));
+        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO, false));
     }
 
     @GetMapping("/tourism-spot/{id}/name")

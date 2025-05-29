@@ -84,7 +84,6 @@ public class TourismSpotService {
                 userService.saveUserLikedSpots(user);
             }
         }
-
         return true;
     }
 
