@@ -1,13 +1,10 @@
 package com.example.egy_tour.service;
 
 import com.example.egy_tour.dto.AddUserPreferenceDTO;
-import com.example.egy_tour.dto.AddUserTourismSpotDTO;
 import com.example.egy_tour.dto.UpdateUserDTO;
 import com.example.egy_tour.model.Preference;
-import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.model.User;
 import com.example.egy_tour.repository.PreferenceRepository;
-import com.example.egy_tour.repository.TourismSpotRepository;
 import com.example.egy_tour.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +17,11 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final PreferenceRepository preferenceRepository;
-    private final TourismSpotRepository tourismSpotRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PreferenceRepository preferenceRepository,
-                       TourismSpotRepository tourismSpotRepository) {
+    public UserService(UserRepository userRepository, PreferenceRepository preferenceRepository) {
         this.userRepository = userRepository;
         this.preferenceRepository = preferenceRepository;
-        this.tourismSpotRepository = tourismSpotRepository;
     }
 
     public User getUserById(Long id) {
@@ -68,20 +62,8 @@ public class UserService {
         return true;
     }
 
-    public Boolean addUserTourismSpot(AddUserTourismSpotDTO addUserTourismSpotDTO) {
-        User user = userRepository.findById(addUserTourismSpotDTO.getUserId()).orElse(null);
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
-        TourismSpot tourismSpot = tourismSpotRepository.findById(addUserTourismSpotDTO.getTourismSpotId()).orElse(null);
-        if (tourismSpot == null) {
-            throw new RuntimeException("Tourism spot not found");
-        }
-        if (!user.getTourismSpots().contains(tourismSpot)) {
-            user.getTourismSpots().add(tourismSpot);
-            userRepository.save(user);
-        }
-        return true;
+    public void saveUserLikedSpots(User user) {
+        userRepository.save(user);
     }
 
 }

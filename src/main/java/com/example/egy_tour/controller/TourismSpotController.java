@@ -1,17 +1,15 @@
 package com.example.egy_tour.controller;
 
+import com.example.egy_tour.dto.UserLikedTourismSpotDTO;
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.dto.TourismSpotPinDTO;
 import com.example.egy_tour.dto.TourismSpotResponse;
-import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
-import com.example.egy_tour.repository.AddressRepository;
 import com.example.egy_tour.repository.TourismSpotRepository;
-import com.example.egy_tour.service.AddressService;
 import com.example.egy_tour.service.TourismSpotService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +53,16 @@ public class TourismSpotController {
         return spots.stream()
                 .map(TourismSpotPinDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/like-spot")
+    public ResponseEntity<Boolean> addUserLikedTourismSpot(@Valid @RequestBody UserLikedTourismSpotDTO addUserTourismSpotDTO) {
+        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO , true));
+    }
+
+    @PostMapping("/unlike-spot")
+    public ResponseEntity<Boolean> removeUserLikedTourismSpot(@Valid @RequestBody UserLikedTourismSpotDTO addUserTourismSpotDTO) {
+        return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO , false));
     }
 
     @GetMapping("/tourism-spot/{id}/name")

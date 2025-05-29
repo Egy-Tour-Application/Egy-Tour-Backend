@@ -1,10 +1,11 @@
 package com.example.egy_tour.service;
 
+import com.example.egy_tour.dto.UserLikedTourismSpotDTO;
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.dto.TourismSpotResponse;
-import com.example.egy_tour.dto.UserResponseDTO;
 import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
+import com.example.egy_tour.model.User;
 import com.example.egy_tour.repository.TourismSpotRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,19 @@ import java.util.List;
 @Service
 public class TourismSpotService {
     private final TourismSpotRepository tourismSpotRepository;
+    private final UserService userService;
     private final AddressService addressService;
     private final ImageService imageService;
     private final ModelMapper mapper;
 
 
-    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService, ModelMapper mapper, ImageService imageService) {
+    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService,
+                              ImageService imageService, UserService userService, ModelMapper mapper) {
         this.tourismSpotRepository = tourismSpotRepository;
         this.addressService = addressService;
-        this.mapper = mapper;
         this.imageService = imageService;
+        this.userService = userService;
+        this.mapper = mapper;
     }
 
     public TourismSpot createTourismSpot(CreateTourismSpotDTO createTourismSpotDTO) {
@@ -58,6 +62,30 @@ public class TourismSpotService {
 
     public List<TourismSpot> getAllTourismSpots() {
         return tourismSpotRepository.findAll();
+    }
+
+    public Boolean handleUserLikedTourismSpot(UserLikedTourismSpotDTO addUserTourismSpotDTO, boolean addLike) {
+        User user = userService.getUserById(addUserTourismSpotDTO.getUserId());
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        TourismSpot tourismSpot = tourismSpotRepository.findById(addUserTourismSpotDTO.getTourismSpotId()).orElse(null);
+        if (tourismSpot == null) {
+            throw new RuntimeException("Tourism spot not found");
+        }
+        if (addLike) {
+            if (!user.getTourismSpots().contains(tourismSpot)) {
+                user.getTourismSpots().add(tourismSpot);
+                userService.saveUserLikedSpots(user);
+            }
+        } else {
+            if (user.getTourismSpots().contains(tourismSpot)) {
+                user.getTourismSpots().remove(tourismSpot);
+                userService.saveUserLikedSpots(user);
+            }
+        }
+
+        return true;
     }
 
 }

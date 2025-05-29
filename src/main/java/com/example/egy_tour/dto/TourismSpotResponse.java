@@ -1,7 +1,6 @@
 package com.example.egy_tour.dto;
 
 import com.example.egy_tour.model.TourismSpot;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
