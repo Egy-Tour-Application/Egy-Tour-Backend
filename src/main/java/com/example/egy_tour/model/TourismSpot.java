@@ -24,7 +24,7 @@ public class TourismSpot {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", length = 2000)
+    @Column(name = "description", length = 4000)
     private String description;
 
     @Column(name = "type")

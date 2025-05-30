@@ -1,5 +1,6 @@
 package com.example.egy_tour.service;
 
+import com.example.egy_tour.dto.CreateAddressDTO;
 import com.example.egy_tour.dto.UserLikedTourismSpotDTO;
 import com.example.egy_tour.dto.CreateTourismSpotDTO;
 import com.example.egy_tour.dto.TourismSpotResponse;
@@ -35,7 +36,9 @@ public class TourismSpotService {
         try {
             Address tourismSpotAddress = addressService.getAddressByName(createTourismSpotDTO.getAddress());
             if (tourismSpotAddress == null) {
-                throw new RuntimeException("Address not found");
+                tourismSpotAddress = addressService.createAddress(
+                        new CreateAddressDTO(createTourismSpotDTO.getAddress())
+                );
             }
             byte[] image = imageService.getImageFromUrl(createTourismSpotDTO.getImageUrl());
             TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);

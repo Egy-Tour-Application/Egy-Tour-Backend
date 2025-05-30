@@ -14,4 +14,8 @@ public class CreateAddressDTO {
     @NotBlank(message = "Name of Address in required")
     private String name;
     private String parentName;
+
+    public CreateAddressDTO(String name) {
+        this.name = name;
+    }
 }
