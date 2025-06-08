@@ -52,7 +52,8 @@ public class TourismSpot {
     @Column(name = "longitude")
     private double longitude;
 
-    @Column(name = "image" , columnDefinition = "MEDIUMBLOB")
+    @Lob
+    @Column(name = "image")
     private byte[] image;
 
     @JsonIgnore
