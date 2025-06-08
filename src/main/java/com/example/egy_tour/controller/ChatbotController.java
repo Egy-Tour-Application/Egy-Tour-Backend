@@ -1,8 +1,11 @@
 package com.example.egy_tour.controller;
+import com.example.egy_tour.dto.ChatbotMessageDTO;
 import com.example.egy_tour.service.ChatbotService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +21,7 @@ public class ChatbotController {
     }
 
     @PostMapping("/ask")
-    public ResponseEntity<String> askChatbot(String question) {
-        return ResponseEntity.ok(chatbotService.getChatbotResponse(question));
-
+    public ResponseEntity<String> askChatbot(@Valid @RequestBody ChatbotMessageDTO messageDTO) {
+        return ResponseEntity.ok(chatbotService.getChatbotResponse(messageDTO));
     }
 }
