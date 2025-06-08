@@ -24,8 +24,8 @@ public class ChatbotHistory {
     @Column(name = "msg_content", nullable = false, columnDefinition = "TEXT")
     private String msgContent;
 
-    @Column(name = "flag", nullable = false)
-    private boolean flag;
+    @Column(name = "source", nullable = false)
+    private String source;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time", nullable = false)
