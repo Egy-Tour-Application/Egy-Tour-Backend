@@ -4,6 +4,8 @@ import com.example.egy_tour.dto.ChatHistoryMessageDTO;
 import com.example.egy_tour.dto.ChatbotMessageDTO;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.ChatMemoryRepository;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.document.Document;
 
 import org.springframework.ai.vectorstore.VectorStore;
@@ -19,11 +21,13 @@ public class ChatbotService {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
+    private final ChatMemoryRepository chatMemoryRepository;
 
     @Autowired
-    public ChatbotService(ChatClient chatClient, VectorStore vectorStore) {
+    public ChatbotService(ChatClient chatClient, VectorStore vectorStore, ChatMemoryRepository chatMemoryRepository) {
         this.chatClient = chatClient;
         this.vectorStore = vectorStore;
+        this.chatMemoryRepository = chatMemoryRepository;
     }
 
     public String getChatbotResponse(ChatbotMessageDTO messageDTO) {
@@ -36,7 +40,7 @@ public class ChatbotService {
                 .call().content();
 
         if (response == null) {
-            return "I don't know";
+            return "I don't currently have an answer for that question.";
         }
         int start = response.indexOf("</think>") + 9;
         return response.substring(start).trim();
@@ -67,6 +71,18 @@ public class ChatbotService {
     }
 
     public List<ChatHistoryMessageDTO> getChatHistory(Long userId) {
-
+        List<Message> messages = chatMemoryRepository.findByConversationId(userId.toString());
+        return messages.stream()
+                .map(m ->
+                {
+                    String type = m.getMessageType().toString();
+                    String message = m.getText();
+                    if (type.equals("ASSISTANT")) {
+                        int start = m.getText().indexOf("</think>") + 9;
+                        message = message.substring(start).trim();
+                    }
+                    return new ChatHistoryMessageDTO(type, message);
+                })
+                .toList();
     }
 }
