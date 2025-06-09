@@ -29,10 +29,16 @@ public class ChatbotService {
         Map<String, Object> map = new HashMap<>();
         map.put(ChatMemory.CONVERSATION_ID, messageDTO.getUserId().toString());
 
-        return chatClient.prompt()
+        String response = chatClient.prompt()
                 .advisors(a -> a.params(map))
                 .user(messageDTO.getQuestion())
-                .call().chatClientResponse().toString();
+                .call().content();
+
+        if (response == null) {
+            return "I don't know";
+        }
+        int start = response.indexOf("</think>") + 9;
+        return response.substring(start).trim();
     }
 
     public void addVector(String documentContent, String type, Long id) {
