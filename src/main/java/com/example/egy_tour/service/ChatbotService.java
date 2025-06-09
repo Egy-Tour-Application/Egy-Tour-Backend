@@ -1,5 +1,6 @@
 package com.example.egy_tour.service;
 
+import com.example.egy_tour.dto.ChatHistoryMessageDTO;
 import com.example.egy_tour.dto.ChatbotMessageDTO;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -63,5 +64,9 @@ public class ChatbotService {
     public void updateVector(String documentContent, String type, Long id) {
         deleteVector(type, id);
         addVector(documentContent, type, id);
+    }
+
+    public List<ChatHistoryMessageDTO> getChatHistory(Long userId) {
+
     }
 }
