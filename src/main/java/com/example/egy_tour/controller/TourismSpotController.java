@@ -56,11 +56,5 @@ public class TourismSpotController {
         return ResponseEntity.ok(tourismSpotService.handleUserLikedTourismSpot(addUserTourismSpotDTO, false));
     }
 
-    @GetMapping("/tourism-spot/{id}/name")
-    public ResponseEntity<String> getTourismSpotName(@PathVariable Long id) {
-        TourismSpot spot = tourismSpotRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tourism spot not found"));
-        return ResponseEntity.ok(spot.getTitle());
-    }
 
 }
