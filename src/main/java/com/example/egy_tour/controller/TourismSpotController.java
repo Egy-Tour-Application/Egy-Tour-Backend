@@ -7,7 +7,6 @@ import com.example.egy_tour.dto.TourismSpotResponse;
 import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.repository.TourismSpotRepository;
 import com.example.egy_tour.service.TourismSpotService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,6 @@ import java.util.stream.Collectors;
 public class TourismSpotController {
 
     private final TourismSpotService tourismSpotService;
-    @Autowired
-    private TourismSpotRepository tourismSpotRepository;
 
     public TourismSpotController(TourismSpotService tourismSpotService) {
         this.tourismSpotService = tourismSpotService;
