@@ -74,7 +74,7 @@ public class TimeSlotService {
     }
 
     public List<TourGuide> findAvailableTourGuides(SearchTimeSlotsDTO searchDTO) {
-        List<TimeSlot> availableTimeSlots = timeSlotRepository.findAvailableTimeSlots(
+        List<TimeSlot> availableTimeSlots = timeSlotRepository.findAllByStartTimeBeforeAndEndTimeAfter(
                 searchDTO.getStartTime(),
                 searchDTO.getEndTime());
 

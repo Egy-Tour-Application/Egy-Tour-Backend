@@ -64,4 +64,18 @@ public class TourismSpot {
     @OneToMany(mappedBy = "tourismSpot", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    @Override
+    public String toString() {
+        return title + ": {" +
+                "type='" + type + '\'' +
+                ", egyptianPrice=" + egyptianPrice +
+                ", foreignerPrice=" + foreignerPrice +
+                ", address='" + address.getFullAddressName() + '\'' +
+                ", openingTime='" + openingTime + '\'' +
+                ", closingTime='" + closingTime + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

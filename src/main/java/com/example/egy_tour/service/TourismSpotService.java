@@ -17,15 +17,17 @@ import java.util.List;
 @Service
 public class TourismSpotService {
     private final TourismSpotRepository tourismSpotRepository;
+    private final ChatbotService chatbotService;
     private final UserService userService;
     private final AddressService addressService;
     private final ImageService imageService;
     private final ModelMapper mapper;
 
 
-    public TourismSpotService(TourismSpotRepository tourismSpotRepository, AddressService addressService,
+    public TourismSpotService(TourismSpotRepository tourismSpotRepository, ChatbotService chatbotService, AddressService addressService,
                               ImageService imageService, UserService userService, ModelMapper mapper) {
         this.tourismSpotRepository = tourismSpotRepository;
+        this.chatbotService = chatbotService;
         this.addressService = addressService;
         this.imageService = imageService;
         this.userService = userService;
@@ -44,7 +46,13 @@ public class TourismSpotService {
             TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);
             tourismSpot.setImage(image);
             tourismSpot.setAddress(tourismSpotAddress);
-            return tourismSpotRepository.save(tourismSpot);
+            TourismSpot savedSpot = tourismSpotRepository.save(tourismSpot);
+            chatbotService.addVector(
+                    savedSpot.toString(),
+                    "tourism_spot",
+                    savedSpot.getId()
+            );
+            return savedSpot;
         } catch (Exception e) {
             throw new RuntimeException("Error creating tourism spot");
         }
@@ -55,8 +63,7 @@ public class TourismSpotService {
         List<TourismSpot> tourismSpots = tourismSpotRepository.findAll();
         for (TourismSpot tourismSpot : tourismSpots) {
             TourismSpotResponse tourismSpotResponse = mapper.map(tourismSpot, TourismSpotResponse.class);
-            int userIsLikedSpotsCount = tourismSpotRepository.userIsLikedSpot(userId, tourismSpot.getId());
-            tourismSpotResponse.setLiked(userIsLikedSpotsCount > 0);
+            tourismSpotResponse.setLiked(tourismSpotRepository.userIsLikedSpot(userId, tourismSpot.getId()));
             tourismSpotResponse.setNumLikes(tourismSpotRepository.countTourismSpotsNumLikes(tourismSpot.getId()));
             tourismSpotResponses.add(tourismSpotResponse);
         }

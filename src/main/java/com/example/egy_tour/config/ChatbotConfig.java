@@ -2,6 +2,7 @@ package com.example.egy_tour.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
@@ -19,10 +20,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ChatbotConfig {
 
     @Bean
-    public ChatClient ollamaChatClient(OllamaChatModel chatModel, QuestionAnswerAdvisor questionAnswerAdvisor, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
-        return ChatClient.builder(chatModel).defaultAdvisors(
-                questionAnswerAdvisor, messageChatMemoryAdvisor
-        ).build();
+    public ChatClient ollamaChatClient(OllamaChatModel chatModel,QuestionAnswerAdvisor questionAnswerAdvisor, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
+        return ChatClient.builder(chatModel)
+                .defaultAdvisors(questionAnswerAdvisor, messageChatMemoryAdvisor, new SimpleLoggerAdvisor())
+                .defaultSystem(
+                        "You are a helpful travel assistant. " +
+                                "Answer the user's questions about tourism in Egypt. " +
+                                "If you don't know the answer, say 'I don't know'. " +
+                                "If the user asks for a specific tourism spot, provide information about it."
+                )
+                .build();
     }
 
     @Bean
