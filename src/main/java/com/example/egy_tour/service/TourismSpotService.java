@@ -36,11 +36,15 @@ public class TourismSpotService {
 
     public TourismSpot createTourismSpot(CreateTourismSpotDTO createTourismSpotDTO) {
         try {
-            Address tourismSpotAddress = addressService.getAddressByName(createTourismSpotDTO.getAddress());
-            if (tourismSpotAddress == null) {
-                tourismSpotAddress = addressService.createAddress(
-                        new CreateAddressDTO(createTourismSpotDTO.getAddress())
-                );
+            Address tourismSpotAddress;
+            String[] address = createTourismSpotDTO.getAddress().split(",");
+            if (address.length > 1 && !address[0].equals(address[1])) {
+                tourismSpotAddress = addressService.createAddress(new CreateAddressDTO(address[0], address[1]));
+            } else {
+                tourismSpotAddress = addressService.getAddressByName(address[0]);
+                if (tourismSpotAddress == null) {
+                    tourismSpotAddress = addressService.createAddress(new CreateAddressDTO(address[0]));
+                }
             }
             byte[] image = imageService.getImageFromUrl(createTourismSpotDTO.getImageUrl());
             TourismSpot tourismSpot = mapper.map(createTourismSpotDTO, TourismSpot.class);
@@ -53,10 +57,13 @@ public class TourismSpotService {
                     savedSpot.getId()
             );
             return savedSpot;
+
+
         } catch (Exception e) {
             throw new RuntimeException("Error creating tourism spot");
         }
     }
+
 
     public List<TourismSpotResponse> getAllTourismSpotsWithLikes(Long userId) {
         List<TourismSpotResponse> tourismSpotResponses = new ArrayList<>();

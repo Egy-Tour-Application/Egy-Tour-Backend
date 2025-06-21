@@ -14,23 +14,24 @@ public class AddressService {
     }
 
     public Address createAddress(CreateAddressDTO createAddressDTO) {
-        Address realAddress = new Address(createAddressDTO.getName());
-        if (createAddressDTO.getParentName() != null && !createAddressDTO.getParentName().isEmpty()) {
-            Address parent = addressRepository.findAddressByName(createAddressDTO.getParentName());
-            if (parent != null)  // Getting Address from the parent Name
-                realAddress.setParent(parent);
-            else {
-                Address parentAddress = new Address(createAddressDTO.getName());
-                addressRepository.save(parentAddress);
-                realAddress.setParent(parentAddress);
+        Address realAddress = getAddressByName(createAddressDTO.getName());
+        if (realAddress == null) {
+            realAddress = new Address(createAddressDTO.getName());
+            if (createAddressDTO.getParentName() != null && !createAddressDTO.getParentName().isEmpty()) {
+                Address parent = getAddressByName(createAddressDTO.getParentName());
+                if (parent != null)  // Getting Address from the parent Name
+                    realAddress.setParent(parent);
+                else {
+                    Address parentAddress = new Address(createAddressDTO.getParentName());
+                    addressRepository.save(parentAddress);
+                    realAddress.setParent(parentAddress);
+                }
             }
-
+            return addressRepository.save(realAddress);
+        } else {
+            return realAddress;
         }
-        return addressRepository.save(realAddress);
-    }
 
-    public Address getAddressById(Long id) {
-        return addressRepository.findById(id).orElse(null);
     }
 
     public Address getAddressByName(String name) {
