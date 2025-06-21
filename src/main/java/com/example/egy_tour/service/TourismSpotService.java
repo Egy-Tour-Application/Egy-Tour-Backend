@@ -1,9 +1,6 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.CreateAddressDTO;
-import com.example.egy_tour.dto.UserLikedTourismSpotDTO;
-import com.example.egy_tour.dto.CreateTourismSpotDTO;
-import com.example.egy_tour.dto.TourismSpotResponse;
+import com.example.egy_tour.dto.*;
 import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TourismSpot;
 import com.example.egy_tour.model.User;
@@ -51,11 +48,12 @@ public class TourismSpotService {
             tourismSpot.setImage(image);
             tourismSpot.setAddress(tourismSpotAddress);
             TourismSpot savedSpot = tourismSpotRepository.save(tourismSpot);
-            chatbotService.addVector(
-                    savedSpot.toString(),
+            CreateVectorDTO vectorDTO = new CreateVectorDTO(
+                    savedSpot.getId().toString(),
                     "tourism_spot",
-                    savedSpot.getId()
+                    savedSpot.toString()
             );
+            chatbotService.createVector(vectorDTO);
             return savedSpot;
 
 

@@ -1,6 +1,7 @@
 package com.example.egy_tour.controller;
 import com.example.egy_tour.dto.ChatHistoryMessageDTO;
 import com.example.egy_tour.dto.ChatbotMessageDTO;
+import com.example.egy_tour.dto.CreateVectorDTO;
 import com.example.egy_tour.service.ChatbotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,19 @@ public class ChatbotController {
     @GetMapping("/history/{userId}")
     public ResponseEntity<List<ChatHistoryMessageDTO>> getChatHistory(@PathVariable Long userId) {
         return ResponseEntity.ok(chatbotService.getChatHistory(userId));
+    }
+
+    @PostMapping("/vector")
+    public ResponseEntity<?> addVector(@Valid @RequestBody CreateVectorDTO vectorDTO) {
+        chatbotService.createVector(vectorDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/vector/list")
+    public ResponseEntity<?> addVector(@Valid @RequestBody CreateVectorDTO[] vectorDTOs) {
+        for (CreateVectorDTO vectorDTO : vectorDTOs) {
+            chatbotService.createVector(vectorDTO);
+        }
+        return ResponseEntity.ok().build();
     }
 }

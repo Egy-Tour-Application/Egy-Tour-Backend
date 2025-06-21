@@ -2,6 +2,7 @@ package com.example.egy_tour.service;
 
 import com.example.egy_tour.dto.ChatHistoryMessageDTO;
 import com.example.egy_tour.dto.ChatbotMessageDTO;
+import com.example.egy_tour.dto.CreateVectorDTO;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
@@ -46,28 +47,28 @@ public class ChatbotService {
         return response.substring(start).trim();
     }
 
-    public void addVector(String documentContent, String type, Long id) {
+    public void createVector(CreateVectorDTO vectorDTO) {
         Map<String, Object> metadata = Map.of(
-                "type", type,
-                "id", id.toString()
+                "type", vectorDTO.getType(),
+                "id", vectorDTO.getId()
         );
         vectorStore.add(
-                List.of(new Document(documentContent, metadata))
+                List.of(new Document(vectorDTO.getDocumentContent(), metadata))
         );
     }
 
-    public void deleteVector(String type, Long id) {
+    public void deleteVector(String type, String id) {
         FilterExpressionBuilder feb = new FilterExpressionBuilder();
         Filter.Expression expression = feb.and(
                 feb.eq("type", type),
-                feb.eq("id", id.toString())
+                feb.eq("id", id)
         ).build();
         vectorStore.delete(expression);
     }
 
-    public void updateVector(String documentContent, String type, Long id) {
-        deleteVector(type, id);
-        addVector(documentContent, type, id);
+    public void updateVector(CreateVectorDTO vectorDTO) {
+        deleteVector(vectorDTO.getType(), vectorDTO.getId());
+        createVector(vectorDTO);
     }
 
     public List<ChatHistoryMessageDTO> getChatHistory(Long userId) {

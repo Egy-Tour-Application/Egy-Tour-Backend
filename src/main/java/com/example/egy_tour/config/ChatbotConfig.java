@@ -20,15 +20,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ChatbotConfig {
 
     @Bean
-    public ChatClient ollamaChatClient(OllamaChatModel chatModel,QuestionAnswerAdvisor questionAnswerAdvisor, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
+    public ChatClient ollamaChatClient(OllamaChatModel chatModel, QuestionAnswerAdvisor questionAnswerAdvisor, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
+        String systemPrompt = "You are an AI travel assistant for the EgyTour application. "
+                + "Help users navigate the app by retrieving screen information from the provided context. "
+                + "Also provide tourism spot details using the provided context. "
+                + "If you cannot find the answer, say 'I don't know'.";
+
         return ChatClient.builder(chatModel)
-                .defaultAdvisors(questionAnswerAdvisor, messageChatMemoryAdvisor, new SimpleLoggerAdvisor())
-                .defaultSystem(
-                        "You are a helpful travel assistant. " +
-                                "Answer the user's questions about tourism in Egypt. " +
-                                "If you don't know the answer, say 'I don't know'. " +
-                                "If the user asks for a specific tourism spot, provide information about it."
-                )
+                .defaultAdvisors(messageChatMemoryAdvisor, questionAnswerAdvisor, new SimpleLoggerAdvisor())
+                .defaultSystem(systemPrompt)
                 .build();
     }
 
