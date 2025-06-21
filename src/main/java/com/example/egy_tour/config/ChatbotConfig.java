@@ -22,12 +22,14 @@ public class ChatbotConfig {
     @Bean
     public ChatClient ollamaChatClient(OllamaChatModel chatModel, QuestionAnswerAdvisor questionAnswerAdvisor, MessageChatMemoryAdvisor messageChatMemoryAdvisor) {
         String systemPrompt = "You are an AI travel assistant for the EgyTour application. "
-                + "Help users navigate the app by retrieving screen information from the provided context. "
-                + "Also provide tourism spot details using the provided context. "
-                + "If you cannot find the answer, say 'I don't know'.";
+                + "Provide information, details and descriptions for tourism spots using the provided context. "
+                + "Help users navigate the app by retrieving screen information from the provided context, "
+                + "only mention screens if the user asks about navigating the application. "
+                + "If you cannot find the answer, say 'I don't know'. "
+                + "{userInfo}";
 
         return ChatClient.builder(chatModel)
-                .defaultAdvisors(messageChatMemoryAdvisor, questionAnswerAdvisor, new SimpleLoggerAdvisor())
+                .defaultAdvisors(questionAnswerAdvisor, messageChatMemoryAdvisor, new SimpleLoggerAdvisor())
                 .defaultSystem(systemPrompt)
                 .build();
     }
@@ -51,7 +53,7 @@ public class ChatbotConfig {
     QuestionAnswerAdvisor questionAnswerAdvisor(VectorStore vectorStore) {
         return QuestionAnswerAdvisor.builder(vectorStore)
                 .searchRequest(
-                        SearchRequest.builder().similarityThreshold(0.5).topK(10).build()
+                        SearchRequest.builder().similarityThreshold(0.5).topK(5).build()
                 )
                 .build();
     }

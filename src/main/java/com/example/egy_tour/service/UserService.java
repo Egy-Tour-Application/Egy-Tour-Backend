@@ -66,4 +66,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public String getUserInformation(Long userId) {
+        List<Preference> preferences = userRepository.findUserPreferences(userId);
+        if (preferences == null || preferences.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder information = new StringBuilder("User Information: ");
+        for (Preference preference : preferences) {
+            information.append(preference.getName()).append(", ");
+        }
+        return information.toString();
+    }
 }

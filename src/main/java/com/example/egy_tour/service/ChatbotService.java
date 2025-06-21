@@ -23,20 +23,27 @@ public class ChatbotService {
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
     private final ChatMemoryRepository chatMemoryRepository;
+    private final UserService userService;
 
     @Autowired
-    public ChatbotService(ChatClient chatClient, VectorStore vectorStore, ChatMemoryRepository chatMemoryRepository) {
+    public ChatbotService(ChatClient chatClient, VectorStore vectorStore, ChatMemoryRepository chatMemoryRepository, UserService userService) {
         this.chatClient = chatClient;
         this.vectorStore = vectorStore;
         this.chatMemoryRepository = chatMemoryRepository;
+        this.userService = userService;
     }
 
     public String getChatbotResponse(ChatbotMessageDTO messageDTO) {
-        Map<String, Object> map = new HashMap<>();
-        map.put(ChatMemory.CONVERSATION_ID, messageDTO.getUserId().toString());
+        Map<String, Object> advisorParams = new HashMap<>();
+        advisorParams.put(ChatMemory.CONVERSATION_ID, messageDTO.getUserId().toString());
+
+        Map<String, Object> systemParams = new HashMap<>();
+        System.out.println(userService.getUserInformation(messageDTO.getUserId()));
+        systemParams.put("userInfo", userService.getUserInformation(messageDTO.getUserId()));
 
         String response = chatClient.prompt()
-                .advisors(a -> a.params(map))
+                .system(sp -> sp.params(systemParams))
+                .advisors(a -> a.params(advisorParams))
                 .user(messageDTO.getQuestion())
                 .call().content();
 
