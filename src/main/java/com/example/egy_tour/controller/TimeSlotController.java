@@ -3,7 +3,6 @@ package com.example.egy_tour.controller;
 import com.example.egy_tour.dto.*;
 import com.example.egy_tour.model.TimeSlot;
 import com.example.egy_tour.model.TourGuide;
-import com.example.egy_tour.model.User;
 import com.example.egy_tour.service.TimeSlotService;
 import com.example.egy_tour.service.TourGuideService;
 import jakarta.validation.Valid;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,8 +26,8 @@ public class TimeSlotController {
     @PostMapping("/tour-guide/{id}")
     public ResponseEntity<TimeSlot> createTimeSlot(
             @PathVariable Long id,
-            @Valid @RequestBody CreateTimeSlotDTO createTimeSlotDTO) {
-        TimeSlot timeSlot = timeSlotService.createTimeSlot(id, createTimeSlotDTO);
+            @Valid @RequestBody TimeSlotDTO timeSlotDTO) {
+        TimeSlot timeSlot = timeSlotService.createTimeSlot(id, timeSlotDTO);
         return ResponseEntity.ok(timeSlot);
     }
 
@@ -43,7 +40,7 @@ public class TimeSlotController {
     @PutMapping("/{id}")
     public ResponseEntity<TimeSlot> updateTimeSlot(
             @PathVariable Long id,
-            @Valid @RequestBody CreateTimeSlotDTO updateTimeSlotDTO) {
+            @Valid @RequestBody TimeSlotDTO updateTimeSlotDTO) {
         TimeSlot timeSlot = timeSlotService.updateTimeSlot(id, updateTimeSlotDTO);
         return ResponseEntity.ok(timeSlot);
     }
@@ -61,7 +58,7 @@ public class TimeSlotController {
             @RequestParam Long addressId
     ) {
         List<TourGuide> tourGuides = timeSlotService.findAvailableTourGuides(
-                new SearchTimeSlotsDTO(startDate, endDate, addressId)
+                new TimeSlotDTO(startDate, endDate, addressId)
         );
 
         List<TourGuideResponseDTO> dtoList = tourGuides.stream()
