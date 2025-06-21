@@ -86,9 +86,11 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tourism_spot_id", nullable = false)
     )
+    @JsonIgnore
     private List<TourismSpot> TourismSpots;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private TourGuide tourGuide;
 
 

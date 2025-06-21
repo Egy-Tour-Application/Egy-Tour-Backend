@@ -1,7 +1,6 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.CreateTimeSlotDTO;
-import com.example.egy_tour.dto.SearchTimeSlotsDTO;
+import com.example.egy_tour.dto.TimeSlotDTO;
 import com.example.egy_tour.model.Address;
 import com.example.egy_tour.model.TimeSlot;
 import com.example.egy_tour.model.TourGuide;
@@ -29,16 +28,16 @@ public class TimeSlotService {
     private AddressRepository addressRepository;
 
     @Transactional
-    public TimeSlot createTimeSlot(Long tourGuideId, CreateTimeSlotDTO createTimeSlotDTO) {
+    public TimeSlot createTimeSlot(Long tourGuideId, TimeSlotDTO timeSlotDTO) {
         TourGuide tourGuide = tourGuideRepository.findById(tourGuideId)
                 .orElseThrow(() -> new EntityNotFoundException("Tour guide not found"));
 
-        Address address = addressRepository.findById(createTimeSlotDTO.getAddressId())
+        Address address = addressRepository.findById(timeSlotDTO.getAddressId())
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
 
         TimeSlot timeSlot = new TimeSlot();
-        timeSlot.setStartTime(createTimeSlotDTO.getStartTime());
-        timeSlot.setEndTime(createTimeSlotDTO.getEndTime());
+        timeSlot.setStartTime(timeSlotDTO.getStartTime());
+        timeSlot.setEndTime(timeSlotDTO.getEndTime());
         timeSlot.setTourGuide(tourGuide);
         timeSlot.setAddress(address);
 
@@ -52,7 +51,7 @@ public class TimeSlotService {
     }
 
     @Transactional
-    public TimeSlot updateTimeSlot(Long timeSlotId, CreateTimeSlotDTO updateTimeSlotDTO) {
+    public TimeSlot updateTimeSlot(Long timeSlotId, TimeSlotDTO updateTimeSlotDTO) {
         TimeSlot timeSlot = timeSlotRepository.findById(timeSlotId)
                 .orElseThrow(() -> new EntityNotFoundException("Time slot not found"));
 
@@ -73,7 +72,7 @@ public class TimeSlotService {
         timeSlotRepository.delete(timeSlot);
     }
 
-    public List<TourGuide> findAvailableTourGuides(SearchTimeSlotsDTO searchDTO) {
+    public List<TourGuide> findAvailableTourGuides(TimeSlotDTO searchDTO) {
         List<TimeSlot> availableTimeSlots = timeSlotRepository.findAllByStartTimeBeforeAndEndTimeAfter(
                 searchDTO.getStartTime(),
                 searchDTO.getEndTime());
