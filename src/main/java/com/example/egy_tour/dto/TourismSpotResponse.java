@@ -23,6 +23,8 @@ public class TourismSpotResponse {
     private String address;
     private boolean liked;
     private int numLikes;
+    private double latitude;
+    private double longitude;
 
     public TourismSpotResponse(TourismSpot tourismSpot) {
         this.id = tourismSpot.getId();
@@ -35,5 +37,7 @@ public class TourismSpotResponse {
         this.closingTime = tourismSpot.getClosingTime();
         this.image = tourismSpot.getImage();
         this.address = tourismSpot.getAddress().getName();
+        this.latitude = tourismSpot.getLatitude();
+        this.longitude = tourismSpot.getLongitude();
     }
 }
