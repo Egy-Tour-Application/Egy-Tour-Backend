@@ -1,6 +1,5 @@
 package com.example.egy_tour.service;
 
-import com.example.egy_tour.dto.CreateBookingDTO;
 import com.example.egy_tour.dto.CreateProgramDTO;
 import com.example.egy_tour.dto.ProgramResponseDTO;
 import com.example.egy_tour.dto.UpdateProgramDTO;
@@ -14,15 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class ProgramService {
 
     @Autowired
     private ProgramRepository programRepository;
-    @Autowired
-    TourismSpotRepository tourismSpotRepository;
-    @Autowired
-    private TourGuideRepository tourGuideRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired

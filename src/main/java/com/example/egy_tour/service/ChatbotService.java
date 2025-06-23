@@ -38,7 +38,6 @@ public class ChatbotService {
         advisorParams.put(ChatMemory.CONVERSATION_ID, messageDTO.getUserId().toString());
 
         Map<String, Object> systemParams = new HashMap<>();
-        System.out.println(userService.getUserInformation(messageDTO.getUserId()));
         systemParams.put("userInfo", userService.getUserInformation(messageDTO.getUserId()));
 
         String response = chatClient.prompt()

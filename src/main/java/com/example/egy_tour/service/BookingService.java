@@ -114,7 +114,8 @@ public class BookingService {
     }
 
     public BookingResponseDTO mapToBookingResponse(Booking booking){
-        User user = booking.getUser();
+        TourGuide tourGuide = booking.getTourGuide();
+        User user = tourGuide.getUser();
         UserResponseDTO userDTO = new UserResponseDTO(
                 user.getId(),
                 user.getFirstName(),
@@ -125,7 +126,6 @@ public class BookingService {
                 user.getGender()
         );
 
-        TourGuide tourGuide = booking.getTourGuide();
         TourGuideResponseDTO tourGuideDTO = new TourGuideResponseDTO(
                 tourGuide.getId(),
                 tourGuide.getPrice(),

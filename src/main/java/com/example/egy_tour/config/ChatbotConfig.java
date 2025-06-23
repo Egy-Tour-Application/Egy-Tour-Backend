@@ -26,6 +26,8 @@ public class ChatbotConfig {
                 + "Help users navigate the app by retrieving screen information from the provided context, "
                 + "only mention screens if the user asks about navigating the application. "
                 + "If you cannot find the answer, say 'I don't know'. "
+                + "Carefully analyze the context and only use the parts of it relevant to the user's question. "
+                + "Don't explicitly mention the word context in your responses. "
                 + "{userInfo}";
 
         return ChatClient.builder(chatModel)
